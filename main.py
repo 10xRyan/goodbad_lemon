@@ -1,7 +1,9 @@
 from LemonClassifier import logger
 from LemonClassifier.pipeline.s1_data_ingestion import DataIngestionTrainingPipeline
 from LemonClassifier.pipeline.s2_base_model import PrepareBaseModelTrainingPipeline
+from LemonClassifier.pipeline.s3_train_model import ModelTrainingPipeline
 
+'''
 STAGE_NAME = "Data Ingestion stage"
 try:
    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
@@ -24,3 +26,15 @@ except Exception as e:
         logger.exception(e)
         raise e
 
+'''
+
+STAGE_NAME = "Training"
+try: 
+   logger.info(f"*******************")
+   logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+   model_trainer = ModelTrainingPipeline()
+   model_trainer.main()
+   logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+except Exception as e:
+        logger.exception(e)
+        raise e
