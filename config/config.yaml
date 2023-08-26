@@ -3,7 +3,7 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://github.com/10xRyan/lemon_image_data/raw/main/lemon_image_data.zip
+  source_URL: https://github.com/10xRyan/goodbad_lemon_data/raw/main/lemon_image.zip
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
 

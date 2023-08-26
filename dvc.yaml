@@ -1,0 +1,58 @@
+stages:
+  data_ingestion:
+    cmd: python src/LemonClassifier/pipeline/s1_data_ingestion.py
+    deps:
+      - src/LemonClassifier/pipeline/s1_data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/lemon_image
+
+
+  prepare_base_model:
+    cmd: python src/LemonClassifier/pipeline/s2_base_model.py
+    deps:
+      - src/LemonClassifier/pipeline/s2_base_model.py
+      - config/config.yaml
+    params:
+      - IMAGE_SIZE
+      - INCLUDE_TOP
+      - CLASSES
+      - WEIGHTS
+      - LEARNING_RATE
+    outs:
+      - artifacts/prepare_base_model
+
+
+
+  training:
+    cmd: python src/LemonClassifier/pipeline/s3_train_model.py
+    deps:
+      - src/LemonClassifier/pipeline/s3_train_model.py
+      - src/LemonClassifier/components/callbacks.py
+      - config/config.yaml
+      - artifacts/data_ingestion/lemon_image
+      - artifacts/prepare_base_model
+    params:
+      - IMAGE_SIZE
+      - EPOCHS
+      - BATCH_SIZE
+      - AUGMENTATION
+    outs:
+      - artifacts/training/model.h5
+
+
+  
+
+  evaluation:
+    cmd: python src/LemonClassifier/pipeline/s4_evaluation.py
+    deps:
+      - src/LemonClassifier/pipeline/s4_evaluation.py
+      - config/config.yaml
+      - artifacts/data_ingestion/lemon_image
+      - artifacts/training/model.h5
+    params:
+      - IMAGE_SIZE
+      - BATCH_SIZE
+    metrics:
+    - scores.json:
+        cache: false
