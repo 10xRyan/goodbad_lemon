@@ -24,10 +24,10 @@ class PredictionPipeline:
 
         if result[0] == 0:
             prediction = 'Um...I think you should throw it away'
-            return prediction
+            return [prediction]
         elif result[0] ==1:
             prediction = 'Give me a pic which actaully have a lemon in it'
-            return prediction
+            return [prediction]
         else:
             prediction = "Looks like a healthy lemon!"
-            return prediction
+            return [prediction]
