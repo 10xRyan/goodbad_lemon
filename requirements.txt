@@ -14,5 +14,4 @@ types-pyYAML
 Flask
 Flask-Cors
 scipy
-tensorflow-gpu
 -e .
